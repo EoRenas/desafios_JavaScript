@@ -1,3 +1,5 @@
+//Jogo do Numero Secreto
+
 let listaDeNumerosSorteados = [];
 let numeroLimite = 10;
 let numeroSecreto = gerarNumeroAleatorio();
