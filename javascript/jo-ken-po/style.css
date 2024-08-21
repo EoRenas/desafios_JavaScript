@@ -13,22 +13,61 @@ body{
     justify-content: center;
     background: #f6f7fb;
 }
+.container {
+    padding: 2rem 7rem;
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
 .result_images{
     display: flex;
-    column-gap: 0rem;
+    column-gap: 2rem;
 }
-.user_result{
-    transform: rotate(-0deg) rotateY(-180deg)
 
+.container.start .user_result{
+    animation: userShake 0.60s ease infinite;
 }
-.cpu_result{
+@keyframes userShake {
+    50%{
+        transform: translateY(10px);
+    }   
+}
+
+
+.container.start .cpu_result{
+    animation: cpuShake 0.62s ease infinite;
+}
+@keyframes cpuShake {
+    50%{
+        transform: translateY(10px);
+    }   
+}
+
+
+.result_images img {
+    width: 100px;
+}
+
+.user_result img{
+    transform: rotate(-0deg) rotateY(-180deg)
+}
+
+.cpu_result img{
     transform: rotate(0deg);
 }
 
-.option_image img{
-  width: 70px;  
-  transform:  rotate(100deg);
+.result{
+    text-align: center;
+    font-size: 1.5rem;
+    color: rgb(0, 0, 0);
+    margin-top: 1rem;
 }
+
+.option_image img{
+    width: 70px;  
+    transform:  rotate(100deg);
+  }
 
 .option_images {
     display: flex;
@@ -37,7 +76,7 @@ body{
     justify-content: space-between;
 }
 
-.option_image{
+.option_image {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -58,31 +97,16 @@ body{
     pointer-events: none;
 }
 
-
-.result{
-    text-align: center;
-    font-size: 1.5rem;
-    color: rgb(0, 0, 0);
-    margin-top: 1rem;
-}
-
-
-.container{
-    padding: 2rem 7rem;
-    border-radius: 14px;
-    background: #fff;
-    box-shadow: 0 5px 10px rgb(0, 0, 0, 0.1);
-}
-
-
-.result_images img {
-    width: 100px;
-}
-
-
 .option_image p{
     color: black;
     font-size: 1.2rem;
     margin-top: 1rem;
 
 }
+
+
+
+
+
+
+
