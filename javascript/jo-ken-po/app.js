@@ -1,67 +1,98 @@
-//inclusão dos elementos
-
+// Inclusão dos elementos
 const gameContainer = document.querySelector('.container');
-    userResult = document.querySelector('.user_result img');
-    cpuResult = document.querySelector('.cpu_result img');
-    result = document.querySelector('.result');
-    optionImages = document.querySelectorAll('.option_image');
+const userResult = document.querySelector('.user_result img');
+const cpuResult = document.querySelector('.cpu_result img');
+const result = document.querySelector('.result');
+const optionImages = document.querySelectorAll('.option_image');
+const historyList = document.querySelector('.history_list');
 
-//console.log(gameContainer, userResult, cpuResult, result, optionImages)
+// Lista para armazenar o histórico das jogadas
+const history = [];
 
-//marcar como ativado ao clicar nas imagens
+// Adiciona um evento de clique às imagens de opção
 optionImages.forEach((image, index) => {
     image.addEventListener('click', (e) => {
         image.classList.add('active');
         
-        //marcar novamente as imagens para criar o registro numerico
+        // Marca a imagem atual e desmarca as outras
         optionImages.forEach((image2, index2) => {
-            // fazer a seleção atual e desmarcar a anterior 
             index !== index2 && image2.classList.remove('active');
         });
 
         gameContainer.classList.add('start');
 
-
-
-
-        let time = setTimeout (() => {
+        let time = setTimeout(() => {
             gameContainer.classList.remove('start');
 
-//selecionar o icone e gerar o seu registro
-let imageSrc = e.target.querySelector('img').src;
-//ao clicar na imagem pegar o registro e mudar para o icone selecionado
-        userResult.src = imageSrc;
+            // Seleciona o ícone e gera o seu registro
+            const imageSrc = e.target.querySelector('img').src;
+            userResult.src = imageSrc;
 
-//gerar numero aleatorio para a CPU
-        let randomNumber = Math.floor(Math.random() * 3)
-//criando uma lista para a CPU selecionar a imagem
-        let cpuImages = ['images/pedra.png', 'images/papel.png', 'images/tesoura.png' ]
-        cpuResult.src = cpuImages[randomNumber];
+            // Gera número aleatório para a CPU
+            const randomNumber = Math.floor(Math.random() * 3);
+            const cpuImages = ['images/pedra.png', 'images/papel.png', 'images/tesoura.png'];
+            cpuResult.src = cpuImages[randomNumber];
 
-//setando as opções para contagem da vitoria para CPU (R para rock, P pra paper, S scissors) usei os nomes em inglês pois temos um conmflito na letra P, que poderia confundir
-        let cpuValue = ['R', 'P', "S"][randomNumber]
-//setando as opções para contagem da vitoria para o usuario
-        let userValue = ['R', 'P', "S"][index]
-//criando os objetos para todos os resultados possivel
-        let outComes = {
-            RR: 'Empatou',
-            RP: 'Você Perdeu!!',
-            RS: 'Você Ganhou!!',
-            PP: 'Empatou',
-            PR: 'Você Ganhou!!',
-            PS: 'Você Perdeu!!',
-            SS: 'Empatou',
-            SP: 'Você Ganhou!!',
-            SR: 'Você Perdeu!!',
+            // Define as opções para contagem da vitória para a CPU e o usuário
+            const cpuValue = ['R', 'P', "S"][randomNumber];
+            const userValue = ['R', 'P', "S"][index];
 
-        };
+            // Cria os objetos para todos os resultados possíveis
+            const outComes = {
+                RR: 'Empatou',
+                RP: 'Você Perdeu!!',
+                RS: 'Você Ganhou!!',
+                PP: 'Empatou',
+                PR: 'Você Ganhou!!',
+                PS: 'Você Perdeu!!',
+                SS: 'Empatou',
+                SP: 'Você Ganhou!!',
+                SR: 'Você Perdeu!!',
+            };
 
-        let outComeValue = outComes[userValue + cpuValue];
+            const outComeValue = outComes[userValue + cpuValue];
+            result.textContent = userValue === cpuValue ? 'Empatou' : `${outComeValue}`;
 
-//resultados
-        result.textContent = userValue === cpuValue ? 'Empatou' : `${outComeValue}`;
-        }, 1500)
+            // Adiciona o resultado ao histórico
+            if (history.length >= 10) {
+                history.shift(); // Remove o item mais antigo se já houver 10 itens
+            }
 
+            history.push({
+                userMove: userResult.src,
+                cpuMove: cpuResult.src,
+                result: outComeValue
+            });
 
+            // Atualiza o histórico na interface
+            updateHistory();
+        }, 1500);
     });
 });
+
+// Atualiza a lista de histórico na interface
+function updateHistory() {
+    historyList.innerHTML = ''; // Limpa o histórico atual
+
+    history.forEach((entry) => {
+        const li = document.createElement('li');
+        li.classList.add('history-item');
+
+        const userImg = document.createElement('img');
+        userImg.src = entry.userMove;
+        userImg.alt = 'Jogada do usuário';
+
+        const cpuImg = document.createElement('img');
+        cpuImg.src = entry.cpuMove;
+        cpuImg.alt = 'Jogada da CPU';
+
+        const resultText = document.createElement('span');
+        resultText.textContent = entry.result;
+
+        li.appendChild(userImg);
+        li.appendChild(cpuImg);
+        li.appendChild(resultText);
+
+        historyList.appendChild(li);
+    });
+}

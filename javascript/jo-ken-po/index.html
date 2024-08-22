@@ -7,20 +7,23 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Campo para digitar o nome -->
+    <div class="input_name">
+        <input type="text" class="name" placeholder="Digite seu nome">
+    </div>
+
+    <!-- Seção principal do jogo -->
     <section class="container">
         <div class="result_field">
             <div class="result_images">
                 <span class="user_result">
                     <img src="images/pedra.png" alt="">
-
                 </span>
                 <span class="cpu_result">
                     <img src="images/pedra.png" alt="">
-
                 </span>
-
             </div>
-                <div class="result">Vamos Lá!!</div>
+            <div class="result">Vamos Lá!!</div>
         </div>
 
         <div class="option_images">
@@ -38,7 +41,15 @@
             </span>
         </div>
     </section>  
-    
+
+    <!-- Seção de histórico das jogadas -->
+    <div class="history">
+        <h2></h2>
+        <ul class="history_list">
+            <!-- As jogadas serão inseridas aqui pelo JavaScript -->
+        </ul>
+    </div>
+
     <script src="app.js" defer></script>
 </body>
 </html>
